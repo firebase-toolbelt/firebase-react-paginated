@@ -17,6 +17,7 @@ You can then create your component using any of our props.
 
 ```javascript
 // ./components/MyComponent
+
 import React from 'react'
 import MyListItem from './MyListItem';
 
@@ -31,9 +32,9 @@ const MyComponent = ({
 }) => (
   <div>
 
-    {isLoading && <p>loading list page…</p>}
-
-    {!isLoading && (
+    {(isLoading) ? (
+      <p>loading list page…</p>
+     ) : (
       <ul>
         {pageIds.map((itemId) => (
           <li key={itemId}>
@@ -51,6 +52,7 @@ export default MyComponent;
 
 ```javascript
 // ./containers/MyComponent
+
 import React from 'react'
 import firebase from 'firebase';
 import withFirebasePagination from 'firebase-react-paginated';
@@ -70,13 +72,16 @@ When dealing with firebase you should always denormalize your data.
 So when creating a list structure you should probably separate the list items data from the list itself.
 That way your list is a lightweight as it gets and you can fetch the item data when the time is right.
 
-```json
+```
+// firebase.json
+
 {
   "listItems": {
     "$itemId_1": "timestamp",
     "$itemId_2": "timestamp",
     "$itemId_3": "timestamp",
-    "$itemId_4": "timestamp" 
+    "$itemId_4": "timestamp",
+    ...
   },
   "items": {
     "$itemId_1": {
@@ -84,7 +89,75 @@ That way your list is a lightweight as it gets and you can fetch the item data w
       "author": "Arthur C. Clarke",
       "description": "A really awesome book",
       "createdAt": "timestamp"
-    }
+    },
+    ...
   }
 }
 ```
+
+Right now we **only work with lists that are ordered by values and they must be numbers**.
+
+```
+{
+   $path: {
+     $itemId: $value : number,
+     $itemId: $value : number,
+     ...
+   }
+}
+```
+We plan to make this more flexible by accepting an `orderBy` prop.
+Still the prop passed holder a numerical value.
+
+# Composing
+
+You can compose your component as you would with `connect` or any other HOC from `recompose` for instance.
+
+```javascript
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { withFirebasePagination } from 'firebase-react-paginated';
+
+...
+
+export default compose(
+
+  connect(null, { fetchItem }),
+  
+  withFirebasePagination({
+    path: 'list',
+    onNewItem: ({ fetchItem }) => (itemId) => fetchItem(itemId)
+  })
+
+)(MyComponent);
+```
+
+# Configurations
+
+`withFirebasePagination(*firebase)(*options)(*WrappedComponent)`
+
+**\*firebase** - must be a valid firebase object or a valid firebase reference.
+
+**\*options** - an object as specified below
+
+**\*WrappedComponent** - the component that will receive the list props
+
+### Options
+
+|prop|value|description|
+|---|---|---|
+|path|`string`|the path to your firebase list. e.g. `list`. **required**|
+|length|`number`|the number of items per page. defaults to `10`.|
+|orderBy|`string`|the prop that will be used for ordering the list. must hold numbered values. defaults to `.value`. e.g. `.value or .priority or propName`|
+|onNewItem|`function`|a function that is called whenever a new item is added to the list (only once per item id). e.g. `(props) => (itemId) => {...}`|
+|onPage|`function`|a function that is called whenever a new page is rendered (even when calling 'the same page' twice as pages may be dynamic). e.g. `(props) => (pageIds, pageValues) => {...}`|
+
+### Passed Props
+
+|prop|value|description|
+|---|---|---|
+|isLoading|`boolean`|is true when a new page is loading.|
+|hasNextPage|`boolean`|is true when the next page has items.|
+|hasPrevPage|`boolean`|is true when the previous page has items.|
+|onNextPage|`function`|will render the next page when called. takes no arguments.|
+|onPrevPage|`function`|will render the previous page when called. takes no arguments.|
