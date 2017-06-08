@@ -24,11 +24,14 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
-  "author": "",
-  "homepage": "",
+  "author": "Georges Boris <github.com/georgesboris>",
+  "homepage": "https://github.com/tasking/firebase-react-paginated",
   "license": "MIT",
-  "repository": "",
+  "repository": "https://github.com/tasking/firebase-react-paginated",
   "keywords": [
-    "react-component"
+    "react",
+    "react-hoc",
+    "firebase",
+    "pagination"
   ]
 }
