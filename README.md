@@ -79,8 +79,7 @@ That way your list is a lightweight as it gets and you can fetch the item data w
       "author": "Arthur C. Clarke",
       "description": "A really awesome book",
       "createdAt": "timestamp"
-    },
-    // ...
+    }
   }
 }
 ```
