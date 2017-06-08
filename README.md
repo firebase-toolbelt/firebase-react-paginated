@@ -12,7 +12,7 @@ Implementing paginated lists when dealing with dynamic content using Firebase ca
 
 [Configurations](#configurations)
 
-# Getting started
+## Getting started
 
 First of all, install the package dependency from npm.
 
@@ -75,7 +75,7 @@ const MyComponentContainer = myPaginatedHOC(MyComponent);
 export default MyComponentContainer;
 ```
 
-# Required Data Structure
+## Required Data Structure
 
 When dealing with firebase you should always denormalize your data.
 So when creating a list structure you should probably separate the list items data from the list itself.
@@ -118,7 +118,7 @@ Right now we **only work with lists that are ordered by values and they must be 
 We plan to make this more flexible by accepting an `orderBy` prop.
 Still the prop passed holder a numerical value.
 
-# Composing with connect or other HOCs
+## Composing with connect or other HOCs
 
 You can compose your component as you would with `connect` or any other HOC from `recompose` for instance.
 
@@ -141,7 +141,7 @@ export default compose(
 )(MyComponent);
 ```
 
-# Configurations
+## Configurations
 
 `withFirebasePagination(*firebase)(*options)(*WrappedComponent)`
 
