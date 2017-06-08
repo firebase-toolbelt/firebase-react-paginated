@@ -1,5 +1,5 @@
-import firebase from './lib/firebase';
-import withFirebasePagination from './src/withFirebasePagination';
+import firebase from '../../lib/firebase';
+import withFirebasePagination from '../../../src/';
 import List from '../components/List';
 
 const ListContainer = withFirebasePagination(firebase)({

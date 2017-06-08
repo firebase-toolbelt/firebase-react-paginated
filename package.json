@@ -22,7 +22,8 @@
   "devDependencies": {
     "nwb": "0.16.x",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "firebase": "3.x"
   },
   "author": "Georges Boris <github.com/georgesboris>",
   "homepage": "https://github.com/tasking/firebase-react-paginated",
