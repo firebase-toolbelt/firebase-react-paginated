@@ -75,10 +75,10 @@ That way your list is a lightweight as it gets and you can fetch the item data w
   },
   "items": {
     "$itemId_1": {
-      title: "My item title",
-      author: "Arthur C. Clarke",
-      description: "A really awesome book",
-      createdAt: "timestamp"
+      "title": "My item title",
+      "author": "Arthur C. Clarke",
+      "description": "A really awesome book",
+      "createdAt": "timestamp"
     },
     // ...
   }
