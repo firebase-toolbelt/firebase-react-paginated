@@ -26,7 +26,7 @@
   },
   "author": "Georges Boris <github.com/georgesboris>",
   "homepage": "https://github.com/tasking/firebase-react-paginated",
-  "license": "MIT",
+  "license": "BSD-2-Clause",
   "repository": "https://github.com/tasking/firebase-react-paginated",
   "keywords": [
     "react",
