@@ -2,8 +2,15 @@
 
 Implementing paginated lists when dealing with dynamic content using Firebase can be troublesome. This simple HOC will make dealing with this a breeze for most cases.
 
-You can check a working demo here:
-https://codesandbox.io/s/qKQ9DMMR
+[Demo](https://codesandbox.io/s/qKQ9DMMR)
+
+[Getting Started](#getting-started)
+
+[Required Data Structure](#required-data-structure)
+
+[Composing with connect or other HOCs](#composing-with-connect-or-other-hocs)
+
+[Configurations](#configurations)
 
 # Getting started
 
@@ -109,7 +116,7 @@ Right now we **only work with lists that are ordered by values and they must be 
 We plan to make this more flexible by accepting an `orderBy` prop.
 Still the prop passed holder a numerical value.
 
-# Composing
+# Composing with connect or other HOCs
 
 You can compose your component as you would with `connect` or any other HOC from `recompose` for instance.
 
