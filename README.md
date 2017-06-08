@@ -57,6 +57,8 @@ const MyComponent = ({
 export default MyComponent;
 ```
 
+Then create your container using `withFirebasePagination`.
+
 ```javascript
 // ./containers/MyComponent
 
