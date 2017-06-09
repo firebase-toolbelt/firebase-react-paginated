@@ -1,6 +1,8 @@
 # firebase-react-paginated
 
-Implementing paginated lists when dealing with dynamic content using Firebase can be troublesome. This simple HOC will make dealing with this a breeze for most cases.
+> Implementing paginated lists when dealing with dynamic content using Firebase can be troublesome. This simple HOC will make dealing with this a breeze for most cases.
+
+## Table of Contents
 
 [Demo](https://codesandbox.io/s/qKQ9DMMR)
 
@@ -11,6 +13,8 @@ Implementing paginated lists when dealing with dynamic content using Firebase ca
 [Configurations](#configurations)
 
 [Required Data Structure](#required-data-structure)
+
+[Next Steps](#next-steps)
 
 ## Getting started
 
@@ -177,3 +181,8 @@ Right now we **only work with lists that are ordered by values and they must be 
 ```
 We plan to make this more flexible by accepting an `orderBy` prop.
 Still the prop passed must hold a numerical value.
+
+## Next Steps
+
+[] accept other `orderBy` possibilities
+[] create tests using jest
