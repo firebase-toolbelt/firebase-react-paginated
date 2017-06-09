@@ -92,18 +92,16 @@ You can compose your component as you would with `connect` or any other HOC from
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebasePagination } from 'firebase-react-paginated';
+import { fetchItem } from './redux/actions';
 
 ...
 
 export default compose(
-
   connect(null, { fetchItem }),
-  
   withFirebasePagination({
     path: 'list',
     onNewItem: ({ fetchItem }) => (itemId) => fetchItem(itemId)
   })
-
 )(MyComponent);
 ```
 
@@ -178,4 +176,4 @@ Right now we **only work with lists that are ordered by values and they must be 
 }
 ```
 We plan to make this more flexible by accepting an `orderBy` prop.
-Still the prop passed holder a numerical value.
+Still the prop passed must hold a numerical value.
