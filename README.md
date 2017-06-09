@@ -1,6 +1,6 @@
 # firebase-react-paginated
 
-> Implementing paginated lists when dealing with dynamic content using Firebase can be troublesome. This simple HOC will make dealing with this a breeze for most cases.
+Implementing paginated lists when dealing with dynamic content using Firebase can be troublesome. This simple HOC will make dealing with this a breeze for most cases.
 
 ## Table of Contents
 
@@ -184,5 +184,5 @@ Still the prop passed must hold a numerical value.
 
 ## Next Steps
 
-[] accept other `orderBy` possibilities
-[] create tests using jest
+- [ ] accept other `orderBy` possibilities
+- [ ] create tests using jest
