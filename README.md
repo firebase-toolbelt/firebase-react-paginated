@@ -6,11 +6,11 @@ Implementing paginated lists when dealing with dynamic content using Firebase ca
 
 [Getting Started](#getting-started)
 
-[Required Data Structure](#required-data-structure)
-
 [Composing with connect or other HOCs](#composing-with-connect-or-other-hocs)
 
 [Configurations](#configurations)
+
+[Required Data Structure](#required-data-structure)
 
 ## Getting started
 
@@ -84,49 +84,6 @@ export default withFirebasePagination(firebase)({
 })(MyComponent);
 ```
 
-## Required Data Structure
-
-When dealing with firebase you should always denormalize your data.
-So when creating a list structure you should probably separate the list items data from the list itself.
-That way your list is a lightweight as it gets and you can fetch the item data when the time is right.
-
-```
-// firebase.json
-
-{
-  "listItems": {
-    "$itemId_1": "timestamp",
-    "$itemId_2": "timestamp",
-    "$itemId_3": "timestamp",
-    "$itemId_4": "timestamp",
-    ...
-  },
-  "items": {
-    "$itemId_1": {
-      "title": "My item title",
-      "author": "Arthur C. Clarke",
-      "description": "A really awesome book",
-      "createdAt": "timestamp"
-    },
-    ...
-  }
-}
-```
-
-Right now we **only work with lists that are ordered by values and they must be numbers**.
-
-```
-{
-   $path: {
-     $itemId: $value : number,
-     $itemId: $value : number,
-     ...
-   }
-}
-```
-We plan to make this more flexible by accepting an `orderBy` prop.
-Still the prop passed holder a numerical value.
-
 ## Composing with connect or other HOCs
 
 You can compose your component as you would with `connect` or any other HOC from `recompose` for instance.
@@ -179,3 +136,46 @@ export default compose(
 |hasPrevPage|`boolean`|is true when the previous page has items.|
 |onNextPage|`function`|will render the next page when called. takes no arguments.|
 |onPrevPage|`function`|will render the previous page when called. takes no arguments.|
+
+## Required Data Structure
+
+When dealing with firebase you should always denormalize your data.
+So when creating a list structure you should probably separate the list items data from the list itself.
+That way your list is a lightweight as it gets and you can fetch the item data when the time is right.
+
+```
+// firebase.json
+
+{
+  "listItems": {
+    "$itemId_1": "timestamp",
+    "$itemId_2": "timestamp",
+    "$itemId_3": "timestamp",
+    "$itemId_4": "timestamp",
+    ...
+  },
+  "items": {
+    "$itemId_1": {
+      "title": "My item title",
+      "author": "Arthur C. Clarke",
+      "description": "A really awesome book",
+      "createdAt": "timestamp"
+    },
+    ...
+  }
+}
+```
+
+Right now we **only work with lists that are ordered by values and they must be numbers**.
+
+```
+{
+   $path: {
+     $itemId: $value : number,
+     $itemId: $value : number,
+     ...
+   }
+}
+```
+We plan to make this more flexible by accepting an `orderBy` prop.
+Still the prop passed holder a numerical value.
