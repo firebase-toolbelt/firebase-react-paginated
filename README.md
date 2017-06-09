@@ -121,7 +121,7 @@ export default compose(
 ### Options
 
 |prop|value|description|
-|---|---|---|
+|---|:---:|---|
 |path|`string`|the path to your firebase list. e.g. `list`. **required**|
 |length|`number`|the number of items per page. defaults to `10`.|
 |orderBy|`string`|the prop that will be used for ordering the list. **must hold numbered values**. defaults to `.value`. e.g. `.value or .priority or propName`|
@@ -140,5 +140,4 @@ export default compose(
 
 ## Next Steps
 
-- [x] accept other `orderBy` possibilities
 - [ ] create tests using jest
