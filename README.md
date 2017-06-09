@@ -17,7 +17,7 @@ Implementing paginated lists when dealing with dynamic content using Firebase ca
 First of all, install the package dependency from npm.
 
 ```
-npm install -s firebase-react-paginated
+npm -i -s firebase-react-paginated
 ```
 
 You can then create your component using any of our props.
@@ -50,6 +50,14 @@ const MyComponent = ({
         ))}
       </ul>
     )}
+    
+    <button disabled={hasPrevProps} onClick={onPrevProps}>
+      show previous items
+    </button>
+    
+    <button disabled={hasNextProps} onClick={onNextProps}>
+      show next items
+    </button>
 
   </div>
 );
@@ -69,10 +77,11 @@ import MyComponent from '../components/MyComponent';
 
 firebase.config(/* your firebase config */);
 
-const myPaginatedHOC = withFirebasePagination(firebase)({ path: 'listItems' });
-const MyComponentContainer = myPaginatedHOC(MyComponent);
-
-export default MyComponentContainer;
+export default withFirebasePagination(firebase)({
+  path: 'listItems',
+  orderBy: '.value',
+  length: 20
+})(MyComponent);
 ```
 
 ## Required Data Structure
