@@ -51,11 +51,11 @@ const MyComponent = ({
       </ul>
     )}
     
-    <button disabled={hasPrevProps} onClick={onPrevProps}>
+    <button disabled={!hasPrevProps} onClick={onPrevProps}>
       show previous items
     </button>
     
-    <button disabled={hasNextProps} onClick={onNextProps}>
+    <button disabled={!hasNextProps} onClick={onNextProps}>
       show next items
     </button>
 
