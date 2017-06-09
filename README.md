@@ -1,6 +1,6 @@
 # firebase-react-paginated
 
-Implementing paginated lists when dealing with dynamic content using Firebase can be troublesome. This simple HOC will make dealing with this a breeze for most cases.
+Implementing paginated lists when dealing with dynamic content using Firebase can be troublesome. This simple HOC will make dealing with this a breeze for most cases. You can choose to order the list by priority, value or child.  The only required setup is that **the value used for ordering the list must be a number**.
 
 ## Table of Contents
 
