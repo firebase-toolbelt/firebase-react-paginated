@@ -22,7 +22,7 @@ const withFirebasePages = (firebase) => {
 
         baseRef = null
 
-        onItemCallStack = {}
+        onNewItemCallStack = {}
       
         mounted = true
       
@@ -33,6 +33,7 @@ const withFirebasePages = (firebase) => {
         options = {}
         
         state = {
+          items: [],
           pageItems: [],
           hasNextPage: false,
           hasPrevPage: false
@@ -74,7 +75,7 @@ const withFirebasePages = (firebase) => {
         }
 
         getAnchorValue = (idx) => {
-          const anchorItem = this.state.pageItems[idx];
+          const anchorItem = this.state.items[idx];
           switch (this.options.orderBy) {
             case '.value':
               return anchorItem.value;
@@ -87,17 +88,17 @@ const withFirebasePages = (firebase) => {
 
         preBindListeners = () => {
 
-          const pageItems = this.state.pageItems;
+          const items = this.state.items;
 
-          if (!pageItems.length) {
+          if (!items.length) {
             this.anchor = null;
             return;
           }
 
           this.anchor = (
             this.front
-              ? this.getAnchorValue(pageItems.length - 1)
-              : pageItems.length > this.options.length + 1
+              ? this.getAnchorValue(items.length - 1)
+              : items.length > this.options.length + 1
                 ? this.getAnchorValue(1)
                 : this.getAnchorValue(0)
           );
@@ -121,17 +122,19 @@ const withFirebasePages = (firebase) => {
             if (!this.mounted) return;
             
             let newState = {
-              pageItems: getItems(snap, this.options.onNewItem, this.onNewItemCallStack),
+              items: getItems(snap, this.options.onNewItem, this.onNewItemCallStack),
               isLoading: false
             };
             
             if (this.front) {
-              newState.hasNextPage = newState.pageItems.length > this.options.length;
+              newState.hasNextPage = newState.items.length > this.options.length;
+              newState.pageItems = newState.items.slice(0, this.options.length);
             } else {
-              newState.hasPrevPage = newState.pageItems.length > this.options.length + 1;
+              newState.hasPrevPage = newState.items.length > this.options.length + 1;
+              newState.pageItems = newState.items.slice(-1 + (this.options.length * -1), -1);
             }
             
-            this.options.onNewPage && this.options.onNewPage(pageItems);
+            this.options.onNewPage && this.options.onNewPage(newState.pageItems);
             this.setState(newState);
 
           });
@@ -191,19 +194,10 @@ const withFirebasePages = (firebase) => {
         }
 
         render() {
-          
-          let pageItems = this.state.pageItems;
-          
-          if (this.front) {
-            pageItems = pageItems.slice(0, this.options.length);
-          } else {
-            pageItems = pageItems.slice(-1 + (this.options.length * -1), -1);
-          }
-          
           return (
             <WrappedComponent
               {...this.props}
-              pageItems={pageItems}
+              pageItems={this.state.pageItems}
               isLoading={this.state.isLoading}
               hasNextPage={this.state.hasNextPage}
               hasPrevPage={this.state.hasPrevPage}
