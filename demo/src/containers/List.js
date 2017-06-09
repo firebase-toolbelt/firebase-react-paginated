@@ -4,7 +4,7 @@ import List from '../components/List';
 
 const ListContainer = withFirebasePagination(firebase)({
   path: '/',
-  orderBy: 'value',
+  orderBy: '.value',
   length: 4
 })(List);
 

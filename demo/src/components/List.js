@@ -13,8 +13,8 @@ const List = (props) => {
       </button>
       
       <ul>
-        {props.pageIds.map((id) => (
-          <li key={id}>{id}</li>
+        {props.pageItems.map((item) => (
+          <li key={item.id}>{item.id}</li>
         ))}
       </ul>
       

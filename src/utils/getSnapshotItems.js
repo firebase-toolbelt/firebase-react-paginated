@@ -1,18 +1,20 @@
 export default function getSnapshotItems(snap, onNewItem, onNewItemCallStack) {
   
-  let items = { ids: [], values: [] };
+  let items = [];
 
   snap.forEach((childSnap) => {
 
-    const itemId = childSnap.key;
-    const itemValue = childSnap.val();
+    const item = {
+      id: childSnap.key,
+      value: childSnap.val(),
+      priority: childSnap.getPriority()
+    };
 
-    items.ids.unshift(itemId);
-    items.values.unshift(itemValue);
+    items.unshift(item);
 
-    if (onNewItem && !onNewItemCallStack[itemId]) {
-      onNewItem(itemId, itemValue);
-      onNewItemCallStack[itemId] = true;
+    if (onNewItem && !onNewItemCallStack[item.id]) {
+      onNewItem(item);
+      onNewItemCallStack[item.id] = true;
     }
 
   });

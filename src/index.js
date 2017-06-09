@@ -33,8 +33,7 @@ const withFirebasePages = (firebase) => {
         options = {}
         
         state = {
-          pageIds: [],
-          pageValues: [],
+          pageItems: [],
           hasNextPage: false,
           hasPrevPage: false
         }
@@ -54,23 +53,54 @@ const withFirebasePages = (firebase) => {
           this.options = { ...options };
           if (typeof this.options.path === 'function') this.options.path = this.options.path(this.props);
           if (typeof this.options.orderBy === 'function') this.options.orderBy = this.options.orderBy(this.props);
+          if (!this.options.orderBy) this.options.orderBy = '.value';
           if (!this.options.length) this.options.length = 10;
           if (this.options.onNewItem) this.options.onNewItem = this.options.onNewItem(this.props);
         }
 
         setupRef = () => {
-          this.baseRef = ref.child(this.options.path).orderByValue();
+          switch (this.options.orderBy) {
+            case '.value':
+              this.baseRef = ref.child(this.options.path).orderByValue();
+              break;
+            case '.priority':
+              this.baseRef = ref.child(this.options.path).orderByPriority();
+              break;
+            default:
+              this.baseRef = ref.child(this.options.path).orderByChild(this.options.orderBy);
+              break;
+          }
+        }
+
+        getAnchorValue = (idx) => {
+          const anchorItem = this.state.pageItems[idx];
+          switch (this.options.orderBy) {
+            case '.value':
+              return anchorItem.value;
+            case '.priority':
+              return anchorItem.priority;
+            default:
+              return anchorItem.value[this.options.orderBy];
+          }
         }
 
         preBindListeners = () => {
-          const pageValues = this.state.pageValues;
+
+          const pageItems = this.state.pageItems;
+
+          if (!pageItems.length) {
+            this.anchor = null;
+            return;
+          }
+
           this.anchor = (
             this.front
-              ? pageValues.length ? pageValues[pageValues.length - 1] : null
-              : pageValues.length
-                ? pageValues.length > this.options.length + 1 ? pageValues[1] : pageValues[0]
-                : null
+              ? this.getAnchorValue(pageItems.length - 1)
+              : pageItems.length > this.options.length + 1
+                ? this.getAnchorValue(1)
+                : this.getAnchorValue(0)
           );
+
         }
 
         bindListeners = () => {
@@ -88,19 +118,16 @@ const withFirebasePages = (firebase) => {
           const curListener = curRef.on('value', (snap) => {
             
             if (!this.mounted) return;
-
-            const items = getItems(snap, this.options.onNewItem, this.onNewItemCallStack);
             
             let newState = {
-              pageIds: items.ids,
-              pageValues: items.values,
+              pageItems: getItems(snap, this.options.onNewItem, this.onNewItemCallStack),
               isLoading: false
             };
             
             if (this.front) {
-              newState.hasNextPage = newState.pageIds.length > this.options.length;
+              newState.hasNextPage = newState.pageItems.length > this.options.length;
             } else {
-              newState.hasPrevPage = newState.pageIds.length > this.options.length + 1;
+              newState.hasPrevPage = newState.pageItems.length > this.options.length + 1;
             }
             
             this.setState(newState);
@@ -163,22 +190,18 @@ const withFirebasePages = (firebase) => {
 
         render() {
           
-          let pageIds = this.state.pageIds;
-          let pageValues = this.state.pageValues;
+          let pageItems = this.state.pageItems;
           
           if (this.front) {
-            pageIds = pageIds.slice(0, this.options.length);
-            pageValues = pageValues.slice(0, this.options.length);
+            pageItems = pageItems.slice(0, this.options.length);
           } else {
-            pageIds = pageIds.slice(-1 + (this.options.length * -1), -1);
-            pageValues = pageValues.slice(-1 + (this.options.length * -1), -1);
+            pageItems = pageItems.slice(-1 + (this.options.length * -1), -1);
           }
           
           return (
             <WrappedComponent
               {...this.props}
-              pageIds={pageIds}
-              pageValues={pageValues}
+              pageItems={pageItems}
               isLoading={this.state.isLoading}
               hasNextPage={this.state.hasNextPage}
               hasPrevPage={this.state.hasPrevPage}
