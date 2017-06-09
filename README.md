@@ -33,8 +33,7 @@ import React from 'react'
 import MyListItem from './MyListItem';
 
 const MyComponent = ({
-  pageIds,
-  pageValues,
+  pageItems,
   hasNextPage,
   hasPrevPage,
   onNextPage,
@@ -47,9 +46,9 @@ const MyComponent = ({
       <p>loading list page…</p>
      ) : (
       <ul>
-        {pageIds.map((itemId) => (
-          <li key={itemId}>
-            <MyListItem itemId={itemId} />
+        {pageItems.map((item.id) => (
+          <li key={item.id}>
+            <MyListItem itemId={item.id} />
           </li>
         ))}
       </ul>
@@ -125,9 +124,9 @@ export default compose(
 |---|---|---|
 |path|`string`|the path to your firebase list. e.g. `list`. **required**|
 |length|`number`|the number of items per page. defaults to `10`.|
-|orderBy|`string`|the prop that will be used for ordering the list. must hold numbered values. defaults to `.value`. e.g. `.value or .priority or propName`|
-|onNewItem|`function`|a function that is called whenever a new item is added to the list (only once per item id). e.g. `(props) => (itemId) => {...}`|
-|onPage|`function`|a function that is called whenever a new page is rendered (even when calling 'the same page' twice as pages may be dynamic). e.g. `(props) => (pageIds, pageValues) => {...}`|
+|orderBy|`string`|the prop that will be used for ordering the list. **must hold numbered values**. defaults to `.value`. e.g. `.value or .priority or propName`|
+|onNewItem|`function`|a function that is called whenever a new item is added to the list (only once per item id). e.g. `(props) => (item) => {...}`|
+|onNewPage|`function`|a function that is called whenever a new page is rendered (even when calling 'the same page' twice as pages may have changed). e.g. `(props) => (pageItems) => {...}`|
 
 ### Passed Props
 
@@ -139,50 +138,7 @@ export default compose(
 |onNextPage|`function`|will render the next page when called. takes no arguments.|
 |onPrevPage|`function`|will render the previous page when called. takes no arguments.|
 
-## Required Data Structure
-
-When dealing with firebase you should always denormalize your data.
-So when creating a list structure you should probably separate the list items data from the list itself.
-That way your list is a lightweight as it gets and you can fetch the item data when the time is right.
-
-```
-// firebase.json
-
-{
-  "listItems": {
-    "$itemId_1": "timestamp",
-    "$itemId_2": "timestamp",
-    "$itemId_3": "timestamp",
-    "$itemId_4": "timestamp",
-    ...
-  },
-  "items": {
-    "$itemId_1": {
-      "title": "My item title",
-      "author": "Arthur C. Clarke",
-      "description": "A really awesome book",
-      "createdAt": "timestamp"
-    },
-    ...
-  }
-}
-```
-
-Right now we **only work with lists that are ordered by values and they must be numbers**.
-
-```
-{
-   $path: {
-     $itemId: $value : number,
-     $itemId: $value : number,
-     ...
-   }
-}
-```
-We plan to make this more flexible by accepting an `orderBy` prop.
-Still the prop passed must hold a numerical value.
-
 ## Next Steps
 
-- [ ] accept other `orderBy` possibilities
+- [x] accept other `orderBy` possibilities
 - [ ] create tests using jest

@@ -56,6 +56,7 @@ const withFirebasePages = (firebase) => {
           if (!this.options.orderBy) this.options.orderBy = '.value';
           if (!this.options.length) this.options.length = 10;
           if (this.options.onNewItem) this.options.onNewItem = this.options.onNewItem(this.props);
+          if (this.options.onNewPage) this.options.onNewPage = this.options.onNewPage(this.props);
         }
 
         setupRef = () => {
@@ -130,6 +131,7 @@ const withFirebasePages = (firebase) => {
               newState.hasPrevPage = newState.pageItems.length > this.options.length + 1;
             }
             
+            this.options.onNewPage && this.options.onNewPage(pageItems);
             this.setState(newState);
 
           });
