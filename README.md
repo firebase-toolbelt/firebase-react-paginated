@@ -21,7 +21,7 @@ Implementing paginated lists when dealing with dynamic content using Firebase ca
 First of all, install the package dependency from npm.
 
 ```
-npm -i -s firebase-react-paginated
+yarn add firebase-react-paginated
 ```
 
 You can then create your component using any of our props.
