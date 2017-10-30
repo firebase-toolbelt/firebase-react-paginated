@@ -1,4 +1,6 @@
-# firebase-react-paginated
+<a align="center" href="https://github.com/tasking/firebase-toolbelt"><img width="100%" src="https://i.imgur.com/ssM6FCa.png" alt="Firebase Toolbelt" border="0" /></a>
+
+> Display Firebase dynamic paginated lists in your React applications
 
 Implementing paginated lists when dealing with dynamic content using Firebase can be troublesome. This simple HOC will make dealing with this a breeze for most cases. You can choose to order the list by priority, value or child.  The only required setup is that **the value used for ordering the list must be a number**.
 
