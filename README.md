@@ -1,4 +1,4 @@
-<a align="center" href="https://github.com/tasking/firebase-toolbelt"><img width="100%" src="https://i.imgur.com/ssM6FCa.png" alt="Firebase Toolbelt" border="0" /></a>
+<a align="center" href="https://github.com/firebase-toolbelt/firebase-toolbelt"><img width="100%" src="https://i.imgur.com/ssM6FCa.png" alt="Firebase Toolbelt" border="0" /></a>
 
 > Display Firebase dynamic paginated lists in your React applications
 
